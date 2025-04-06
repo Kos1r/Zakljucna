@@ -5,7 +5,7 @@ import os
 
 
 app = Flask(__name__)
-app.secret_key = "BarberShop" 
+app.secret_key = "FitRiseGym" 
 
 db = TinyDB('stranke.json')
 users = db.table('uporabniki')
