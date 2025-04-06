@@ -1,0 +1,47 @@
+/* Oblikovanje login obrazca */
+#login-container {
+    margin-top: 50px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+#login-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#login-container input {
+    margin-bottom: 15px;
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+#login-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#login-container button:hover {
+    background-color: #c9302c;
+}
+
+/* Sporočilo o napaki */
+#error-message {
+    margin-top: 15px;
+    color: red;
+    font-size: 14px;
+}
