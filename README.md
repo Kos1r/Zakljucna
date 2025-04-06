@@ -4,7 +4,7 @@
 FitRise Slovenija je inovativna spletna stran, ki omogoča obiskovalcem fitnes centrov, da preverijo trenutno število obiskovalcev in razpoložljivost opreme v realnem času. Sistem uporablja tehnologijo ESP32 in NFC skenerje za sledenje obiskovalcem, kjer se številka povečuje ob prihodu obiskovalcev in zmanjšuje ob njihovem odhodu. Tako obiskovalci vedno vedo, kdaj je fitnes prost in kdaj je najboljši čas za obisk.
 
 To je prva fitnes stran v Sloveniji, ki ponuja tovrstno funkcionalnost s števcem obiskovalcev, ki omogoča boljše načrtovanje obiskov in povečanje uporabniške izkušnje.
-##Problem, ki ga rešujemo
+## Problem, ki ga rešujemo
 
 Glavni problem, ki ga rešujemo, je težava pri iskanju primernega časa za obisk fitnesa. Pogosto je težko vedeti, kdaj je fitnes manj zaseden, kar vodi do neoptimalnega planiranja obiskov in dolgotrajnega čakanja na prosto opremo.
 ### Naša rešitev
@@ -31,7 +31,7 @@ Naša stran je prva v Sloveniji z vključeno funkcionalnostjo za spremljanje št
 ## SWOT analiza
 ### PREDNOSTI (S)
 
-    Pionirska funkcionalnost za Slovenijo (števec obiskovalcev v realnem času)
+    Funkcionalnost za Slovenijo (števec obiskovalcev v realnem času)
 
     Tehnološka inovacija z uporabo ESP32 in NFC skenerjev
 
@@ -46,8 +46,6 @@ Naša stran je prva v Sloveniji z vključeno funkcionalnostjo za spremljanje št
     Potrebujemo začetno kritično maso uporabnikov, da bi bila funkcionalnost učinkovita
 
     Možnost zavračanja uporabnikov, če je fitnes preveč zaseden
-
-    Težave pri začetnem nastavljanju sistema v fitnes centrih, kjer niso prisotni potrebni NFC bralci
 
     Visoki stroški začetnega razvoja in implementacije
 
@@ -100,7 +98,7 @@ Naša stran je prva v Sloveniji z vključeno funkcionalnostjo za spremljanje št
 
     Ciljamo na fitnes centre v večjih mestih Slovenije, kjer bo večje število uporabnikov.
 
-    Povezovanje z influenserji v fitnes industriji.
+    Povezovanje z influecerji v fitnes industriji.
 
     Partnerstva s fitnes verigami za širitev funkcionalnosti na večje število fitnes centrov.
 
