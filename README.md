@@ -103,28 +103,56 @@ Naša stran je prva v Sloveniji z vključeno funkcionalnostjo za spremljanje št
     Partnerstva s fitnes verigami za širitev funkcionalnosti na večje število fitnes centrov.
 
 ## Navodila za zagon Python kode
-Kloniraj repozitorij z GitHub-a
+
+### 1. Kloniraj repozitorij z GitHub-a
+
 Najprej moraš klonirati repozitorij na svoj lokalni računalnik. To lahko storiš z naslednjim ukazom:
 
+```
 git clone https://github.com/Kos1r/Zakljucna.git
 cd Zakljucna
-Potrebne knjiznice:
-    -tinydb
-    -flask
+```
+
+### 2. Potrebne knjižnice
+
+Za delovanje aplikacije so potrebne naslednje knjižnice:
+
+- `tinydb`
+- `flask`
+
+Knjižnice lahko namestiš z ukazom:
+
+```
+pip install tinydb flask
+```
+
+### 3. Zaženi aplikacijo
+
 Po tem, ko so vse knjižnice nameščene, lahko zaženeš aplikacijo z ukazom:
 
+```
 py main.py
+```
 
-Preveri aplikacijo v brskalniku
+### 4. Preveri aplikacijo v brskalniku
 
+Aplikacija bo dostopna na naslovu:
+
+```
 http://127.0.0.1:8080
+```
+
 Preveri to v svojem brskalniku, da vidiš, ali aplikacija deluje.
 
-Pogosti problemi
-Napaka pri namestitvi knjižnic: Prepričaj se, da imaš nameščen najnovejši pip. Lahko ga posodobiš z:
+### 5. Pogosti problemi
 
-pip install --upgrade pip
-Napaka pri zagonu aplikacije: Preveri, da imaš pravilno nastavljene poti in da je glavni Python skript pravilno poimenovan.
+- **Napaka pri namestitvi knjižnic**: Prepričaj se, da imaš nameščen najnovejši `pip`. Lahko ga posodobiš z:
+
+  ```
+  pip install --upgrade pip
+  ```
+
+- **Napaka pri zagonu aplikacije**: Preveri, da imaš pravilno nastavljene poti in da je glavni Python skript pravilno poimenovan.
 
 ## Zaključek
 
