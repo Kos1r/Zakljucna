@@ -1,4 +1,4 @@
-# FitRise Slovenija - Fitnes Obiskovalni Števec
+# FitRise Slovenija - Fitnes obiskovalni števec
 ## Opis projekta
 
 FitRise Slovenija je inovativna spletna stran, ki omogoča obiskovalcem fitnes centrov, da preverijo trenutno število obiskovalcev in razpoložljivost opreme v realnem času. Sistem uporablja tehnologijo ESP32 in NFC skenerje za sledenje obiskovalcem, kjer se številka povečuje ob prihodu obiskovalcev in zmanjšuje ob njihovem odhodu. Tako obiskovalci vedno vedo, kdaj je fitnes prost in kdaj je najboljši čas za obisk.
