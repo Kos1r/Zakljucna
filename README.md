@@ -19,12 +19,7 @@ Naša ciljna skupina so fitnes člani v Sloveniji, ki si želijo boljšo uporabn
 ### Velikost trga
 
 Slovenski fitnes trg vključuje več tisoč aktivnih uporabnikov, ki vsakodnevno obiskujejo fitnes centre. Glede na različne fitnes verige, kot so CleverFit, Mega Center, FitInn, BODIFIT in drugi, ocenjujemo, da je v Sloveniji več kot 100.000 rednih uporabnikov fitnes centrov.
-### Konkurenčna analiza
-Ime fitnesa	Prednosti	Slabosti	Naša razlika
-CleverFit	Široka mreža fitnes centrov	Pomanjkanje natančnega vpogleda v zasedenost fitnesa	Števec obiskovalcev v realnem času
-Mega Center	Dobro razviti programi in storitve	Pomanjkanje funkcionalnosti za spremljanje zasedenosti	Delo z NFC tehnologijo za spremljanje obiskovalcev
-FitInn	Ugodne cene in dostopnost	Ni podatkov o trenutnem številu obiskovalcev	Omogočanje natančnega vpogleda v zasedenost opreme
-BODIFIT	Raznolike vadbe in storitve	Omejen vpogled v realno zasedenost	Prva fitnes stran v Sloveniji s števcem obiskovalcev
+
 ## USP (Unique Selling Proposition)
 
 Naša stran je prva v Sloveniji z vključeno funkcionalnostjo za spremljanje števila obiskovalcev fitnesa in njihove zasedenosti v realnem času, kar omogoča boljše načrtovanje obiskov in povečuje uporabniško izkušnjo.
