@@ -26,51 +26,51 @@ Naša stran je prva v Sloveniji z vključeno funkcionalnostjo za spremljanje št
 ## SWOT analiza
 ### PREDNOSTI (S)
 
-    Funkcionalnost za Slovenijo (števec obiskovalcev v realnem času)
+    Funkcionalnost za Slovenijo (števec obiskovalcev v realnem času).
 
-    Tehnološka inovacija z uporabo ESP32 in NFC skenerjev
+    Tehnološka inovacija z uporabo ESP32 in NFC skenerjev.
 
-    Večja zadovoljstvo uporabnikov, saj lahko izberejo najbolj prosti čas za obisk fitnesa
+    Večja zadovoljstvo uporabnikov, saj lahko izberejo najbolj prosti čas za obisk fitnesa.
 
-    Enostavna integracija z obstoječimi fitnesi
+    Enostavna integracija z obstoječimi fitnesi.
 
-    Prilagodljivost za spremljanje napredka uporabnikov (povprečen čas v fitnesu, število obiskov, napredek)
+    Prilagodljivost za spremljanje napredka uporabnikov (povprečen čas v fitnesu, število obiskov, napredek).
 
 ### SLABOSTI (W)
 
-    Potrebujemo začetno kritično maso uporabnikov, da bi bila funkcionalnost učinkovita
+    Potrebujemo začetno kritično maso uporabnikov, da bi bila funkcionalnost učinkovita.
 
-    Možnost zavračanja uporabnikov, če je fitnes preveč zaseden
+    Možnost zavračanja uporabnikov, če je fitnes preveč zaseden.
 
-    Visoki stroški začetnega razvoja in implementacije
+    Visoki stroški začetnega razvoja in implementacije.
 
 ### PRILOŽNOSTI (O)
 
-    Prvi v Sloveniji z to funkcionalnostjo, kar nas postavlja v prednost na trgu
+    Prvi v Sloveniji z to funkcionalnostjo, kar nas postavlja v prednost na trgu.
 
-    Možnost širjenja na druge fitnes centre v Sloveniji in širše
+    Možnost širjenja na druge fitnes centre v Sloveniji in širše.
 
-    Partnerstva z večjimi fitnes verigami, ki bodo želele vključiti to funkcionalnost
+    Partnerstva z večjimi fitnes verigami, ki bodo želele vključiti to funkcionalnost.
 
-    Rast trga fitnesov, saj vse več ljudi skrbi za svoje zdravje
+    Rast trga fitnesov, saj vse več ljudi skrbi za svoje zdravje.
 
 ### GROŽNJE (T)
 
-    Večje fitnes verige bi lahko kopirale našo funkcionalnost in jo uvedle v svoje sisteme
+    Večje fitnes verige bi lahko kopirale našo funkcionalnost in jo uvedle v svoje sisteme.
 
-    Regulacija in zakonodaja o zbiranju in varovanju osebnih podatkov (še posebej, če bo vključeno spremljanje uporabnikov)
+    Regulacija in zakonodaja o zbiranju in varovanju osebnih podatkov (še posebej, če bo vključeno spremljanje uporabnikov).
 
-    Hitro spreminjajoči se trendi v fitnes industriji, ki bi lahko zmanjšali potrebo po naši storitvi
+    Hitro spreminjajoči se trendi v fitnes industriji, ki bi lahko zmanjšali potrebo po naši storitvi.
 
 ### Strategije iz SWOT:
 
-    S-O strategija: Izkoristimo poznavanje ciljne skupine za hitro širjenje storitve in prilagoditev potrebam uporabnikov.
+    S strategija: Izkoristimo poznavanje ciljne skupine za hitro širjenje storitve in prilagoditev potrebam uporabnikov.
 
-    W-O strategija: Povečajmo partnerstva s fitnesi, da pridobimo večjo kritično maso uporabnikov.
+    W strategija: Povečajmo partnerstva s fitnesi, da pridobimo večjo kritično maso uporabnikov.
 
-    S-T strategija: Poudarimo varnost in zaščito zasebnosti uporabnikov kot glavno prednost, da pomirimo morebitne skrbi.
+    O strategija: Poudarimo varnost in zaščito zasebnosti uporabnikov kot glavno prednost, da pomirimo morebitne skrbi.
 
-    W-T strategija: Prilagodimo storitev z dodatnimi funkcionalnostmi, ki bodo težje kopirane s strani konkurence.
+    T strategija: Prilagodimo storitev z dodatnimi funkcionalnostmi, ki bodo težje kopirane s strani konkurence.
 
 ## Poslovni model in finančni plan
 ### Viri prihodkov:
@@ -83,11 +83,11 @@ Naša stran je prva v Sloveniji z vključeno funkcionalnostjo za spremljanje št
 
 ### Struktura stroškov:
 
-    Začetni razvoj: 5.000€ (za razvoj aplikacije, integracijo NFC tehnologije in ESP32 sistemov)
+    Začetni razvoj: 5.000€ (za razvoj aplikacije, integracijo NFC tehnologije in ESP32 sistemov).
 
-    Mesečno vzdrževanje: 500€ (strežniki, podporna ekipa, posodobitve)
+    Mesečno vzdrževanje: 500€ (strežniki, podporna ekipa, posodobitve).
 
-    Marketing: 300€ mesečno (spletno oglaševanje, promocijski dogodki)
+    Marketing: 300€ mesečno (spletno oglaševanje, promocijski dogodki).
 
 ### Strategija pridobivanja uporabnikov:
 
