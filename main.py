@@ -57,5 +57,21 @@ def logout():
 def data():
     return "OK"
 
+@app.route('/paketi')
+def paketi():
+    return render_template('paketi.html')
+
+@app.route('/info')
+def info():
+    return render_template('info.html')
+
+@app.route('/getEmail', methods=['GET'])
+def getEmail():
+    ime = request.form['username']
+    email = request.form['email']
+    print(ime, email)
+
+
+
 if __name__ == '__main__':
     app.run(debug=True, port = 8080) 
