@@ -1,0 +1,140 @@
+#fitrise-paketi {
+    background-color: #f8f9fa;
+    padding: 60px 0;
+    text-align: center;
+}
+
+#fitrise-paketi h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #343a40;
+    animation: fadeInUp 1.5s ease-out;
+}
+
+#fitrise-paketi p {
+    font-size: 18px;
+    color: #6c757d;
+    margin-bottom: 40px;
+    animation: fadeInUp 2s ease-out;
+}
+
+.paket-row {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 30px;
+    animation: fadeInUp 2s ease-out;
+}
+
+.paket {
+    background-color: #ffffff;
+    padding: 50px;
+    margin: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+    text-align: left;
+    width: 100%;
+    max-width: 320px; /* Increase the maximum width */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: slideUp 1s ease-out;
+}
+
+.paket:hover {
+    transform: scale(1.07); /* Slightly larger scaling on hover */
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+}
+
+.paket h2 {
+    font-size: 32px; /* Larger title font size */
+    color: #d32f2f; /* Red color */
+    margin-bottom: 25px; /* More spacing for the titles */
+    animation: fadeInUp 1.5s ease-out;
+}
+
+.paket ul {
+    list-style-type: none;
+    padding: 0;
+    color: #333;
+    margin-bottom: 25px; /* Increased margin for spacing */
+}
+
+.paket ul li {
+    font-size: 18px; /* Larger font size for list items */
+    margin: 12px 0; /* Increased space between list items */
+    line-height: 1.6;
+}
+
+.paket a.btn-primary {
+    background-color: #d32f2f; /* Red button */
+    color: white;
+    text-decoration: none;
+    padding: 15px 28px; /* Larger padding for buttons */
+    border-radius: 6px;
+    font-size: 18px; /* Larger button text */
+    display: inline-block;
+    margin-top: 25px; /* More space above the button */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.paket a.btn-primary:hover {
+    background-color: #c62828; /* Darker red on hover */
+    transform: scale(1.07);
+}
+
+footer {
+    background-color: #343a40;
+    color: white;
+    padding: 20px 0;
+}
+
+footer .fa {
+    color: white;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+footer .fa:hover {
+    color: #ddd;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .paket-row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .paket {
+        max-width: 100%;
+        padding: 35px; /* Reduced padding for smaller screens */
+    }
+
+    .paket h2 {
+        font-size: 28px; /* Adjust title size for small screens */
+    }
+
+    .paket ul li {
+        font-size: 16px; /* Adjust list item size for small screens */
+    }
+}
