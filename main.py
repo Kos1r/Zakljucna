@@ -67,9 +67,10 @@ def info():
 
 @app.route('/getEmail', methods=['GET'])
 def getEmail():
-    ime = request.form['username']
-    email = request.form['email']
+    ime = request.args.get('username')
+    email = request.args.get('email')
     print(ime, email)
+    return jsonify({"rez": ime})
 
 
 

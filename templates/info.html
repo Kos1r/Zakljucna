@@ -60,8 +60,8 @@
             <h1>Cenik</h1>
             <div id="login-container">
                 <h2>Za vec info vnesite naslednje podatke:</h2>
-                
-                <div>
+
+                <div id="errorMessage" style="color:red"></div>
                     <label for="Ime">Ime:</label>
                     <input type="text" id="username" required class="form-control">
                 </div>
@@ -72,7 +72,7 @@
                 </div>
                 
                 <div>
-                    <button onclick="getEmail()" class="btn btn-danger">Prijava / Registracija</button>
+                    <button onclick="getEmail()" class="btn btn-danger">Poslji</button>
                 </div>
             </div>
         </div>
@@ -99,8 +99,8 @@
             const username = document.getElementById('username').value.trim();
             const email = document.getElementById('email').value.trim();
             
-            if (username === '' || password === '') {
-                errorMessage.textContent = 'Uporabniško ime in geslo sta obvezna!';
+            if (username === '' || email === '') {
+                errorMessage.textContent = 'Ime in email sta obvezna!';
                 errorMessage.style.display = 'block';
                 return;
             }
@@ -109,13 +109,13 @@
             
         $.ajax({
         url: "/getEmail",       
-        method: "POST",           
+        method: "GET",           
         data: { username: username,
                 email: email 
         }, 
         success: function(odgovor) {
             // Kaj naredimo ko dobimo odgovor
-            $("#rezultat").html(odgovor.data);
+            window.location.href = "/";
         }
     });
 }
