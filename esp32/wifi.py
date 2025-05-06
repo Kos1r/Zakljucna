@@ -15,4 +15,5 @@ while not wifi.isconnected():
     print(".", end="")
 
 print("\nConnected to Wi-Fi!")
-print("Network config:", wifi.ifconfig())
+ip_address = wifi.ifconfig()[0]
+print("IP address:", ip_address)
