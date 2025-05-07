@@ -9,7 +9,7 @@ mosi_pin = 23
 miso_pin = 19 
 rst_pin = 4   
 
-# Initialize SPI communication
+#SPI komunikacija
 spi = SPI(1, baudrate=1000000, polarity=0, phase=0, sck=Pin(sck_pin), mosi=Pin(mosi_pin), miso=Pin(miso_pin))
 rdr = MFRC522(spi=spi, gpioRst=rst_pin, gpioCs=sda_pin)
 
@@ -23,7 +23,7 @@ def scan_rfid():
         if status == rdr.OK:
             print("Card detected!")
 
-            # Read the UID of the card
+            # UID
             status, uid = rdr.anticoll()
 
             if status == rdr.OK:
@@ -34,6 +34,5 @@ def scan_rfid():
 
         time.sleep(1)
 
-#pozene funkcijo
 scan_rfid()
 
