@@ -12,6 +12,7 @@ db = TinyDB('stranke.json')
 users = db.table('uporabniki')
 User = Query()
 table=db.table('Tabela')
+uids = []
 
 @app.route('/')
 def home():
@@ -60,12 +61,6 @@ def logout():
     
     return render_template("prijava.html")
 
-
-
-@app.route('/data')
-def data():
-    return "OK"
-
 @app.route('/paketi')
 def paketi():
     return render_template('paketi.html')
@@ -80,6 +75,14 @@ def getEmail():
     email = request.args.get('email')
     print(ime, email)
     return jsonify({"rez": ime})
+
+@app.route("/getNFC/<ID>")
+def getNFC(ID):
+    global uids
+    uids.append(ID)
+    print(ID)
+
+    return "OK prebral kartico "
 
 
 
