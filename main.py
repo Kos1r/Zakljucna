@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, jsonify, session, redirect, url_for
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for, send_from_directory
 from tinydb import TinyDB, Query
 from datetime import datetime
 import os
-
+import json
+import requests
 
 app = Flask(__name__)
 app.secret_key = "FitRiseGym" 
@@ -10,46 +11,54 @@ app.secret_key = "FitRiseGym"
 db = TinyDB('stranke.json')
 users = db.table('uporabniki')
 User = Query()
+table=db.table('Tabela')
 
 @app.route('/')
+def home():
+    return render_template('prijava.html')
+
+@app.route('/Register', methods=['POST'])
+def Register():
+
+    Ime = request.form["username"]
+
+    Geslo = request.form["password"]
+    try:
+        with open("stranke.json") as y:
+            value = json.load(y)
+    except json.JSONDecodeError:
+        value = {"Tabela": {}}
+    if any(x["Name"] == Ime for x in value["Tabela"].values()):
+        return render_template("prijava.html")
+    table.insert({"Name": Ime, "Password": Geslo})
+    return render_template("prijava.html")
+
+@app.route("/Login", methods=["POST"])
+def Login():
+    
+    Ime = request.form["username"]
+    Geslo = request.form["password"]
+    try:
+        with open("stranke.json") as y:
+            value = json.load(y)
+    except json.JSONDecodeError:
+        value = {"Tabela": {}}
+    if any(x["Name"] == Ime for x in value["Tabela"].values()):
+        for x in value["Tabela"].values():
+            if x["Name"] == Ime and x["Password"] == Geslo:
+                return render_template("index.html")
+        return render_template("prijava.html", error="Napačno Ime ali Geslo")
+    else:
+        return render_template("prijava.html", error="Napačno Ime ali Geslo")
+
+@app.route('/index')
 def index():
     return render_template('index.html')
-
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        try:
-            username = request.form['username']
-            password = request.form['password']
-            user = users.get(User.username == username)
-            
-            if user:
-                if user['password'] == password:
-                    session['username'] = username
-
-                    return jsonify({'success': True})
-                    
-                else:
-                    return jsonify({'success': False, 'error': 'Napačno geslo'})
-            else:
-                users.insert({'username': username, 'password': password})
-
-                session['username'] = username
-                return jsonify({'success': True})
-                
-        except Exception as e:
-            print(f"Napaka pri prijavi: {str(e)}")
-            return jsonify({'success': False, 'error': 'Prišlo je do napake'})
-    
-    return render_template('login.html')
 
 @app.route('/logout')
 def logout():
     
-    
-    session.pop('username', None)
-    return redirect(url_for('login'))
+    return render_template("prijava.html")
 
 
 
