@@ -45,10 +45,13 @@
                     <div class="collapse navbar-collapse" id="meni">
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="/">Domov</a></li>
-                            <li class="active"><a href="/login">Prijava</a></li>
+                            {% if 'username' in session %}
+                            <li> <a href="/loged">{{ session.get('username')}}</a></li>
+                            <li><a href="/logout">Odjava</a></li>
+                            {% else %}
+                            <li><a href="/login">Prijava</a></li>
+                            {% endif %}
                             <li><a href="/paketi">Paketi</a></li>
-                            <li><a href="prehrana.html">Prehrana</a></li>
-                            <li><a href="testimonials.html">Zgodbe Strank</a></li>
                         </ul>
                     </div>                
                 </div>        
