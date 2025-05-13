@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 from tinydb import TinyDB, Query
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import requests
 
@@ -8,10 +8,10 @@ app = Flask(__name__)
 app.secret_key = "FitRiseGym"
 
 db = TinyDB('stranke.json')
-users = db.table('uporabniki')
 User = Query()
 table=db.table('Tabela')
 uids = []
+registration = []
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -19,9 +19,27 @@ def home():
 @app.route('/Register', methods=['POST'])
 def Register():
 
-    Ime = request.form["username"]
+    Ime = request.form["username"].strip()
     Geslo = request.form["password"]
+    veljavnost = request.form["veljavnost"]
     Uid = request.form["uid"]
+
+    duration = datetime.now() + timedelta(days = int(veljavnost))
+    duration = duration.strftime('%d-%m-%Y')
+    print(Ime, Geslo, veljavnost, Uid)
+    user = db.table('Tabela').search(User.Name == Ime)
+    print(user)
+    identification = db.table('Tablela').search(User.Uid == Uid)
+    if user:
+        return jsonify({"success": False, "error": "Uporabnik je ze v sistemu"})
+    elif identification:
+        return jsonify({"success": False, "error": "Kartica je ze v sistemu"})
+    else:
+        if Ime == "" or Geslo == "" or Uid == "" or veljavnost == "":
+            return jsonify({"success": False, 'error': 'Vsa polja morajo biti izpolnena'})
+        else:
+            table.insert({"Name": Ime, "Password": Geslo, "Uid": Uid, "Duration": duration, "Registered": datetime.now().strftime('%d-%m-%Y')})
+            return jsonify({'success': True})
 
 @app.route("/Login", methods=["POST"])
 def Login():
@@ -85,12 +103,25 @@ def loged():
 @app.route("/getNFC/<ID>")
 def getNFC(ID):
     global uids
-    uids.append(ID)
+    global registration
+    registrated = db.table('Tabela').search(User.Uid == ID)
+    if not registrated:
+        registration.append(ID)
+    else:
+        if ID in uids:
+            uids.remove(ID)
+        else:
+            uids.append(ID)
     print(ID)
-
+    print(f"Registered: {uids}")
+    print(f"Unregistered: {registration}")
     return "OK prebral kartico "
+
+@app.route('/numberOfPeople', methods=['GET'])
+def numberOfPeople():
+    return jsonify({"number": len(uids)})
 
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8080) 
+    app.run(debug=True, port=5000) 

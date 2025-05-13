@@ -105,48 +105,13 @@
         </div>
       </section>
 
-    <!-- Fitnes programski odsek -->
-    <div class="container text-center">
-        <h1>Naši Fitnes Programi</h1>
-        <p>Izberi program, ki ti bo pomagal doseči tvoje cilje!</p>
-        <div class="row">
-            <div class="col-sm-4">
-                <img src="slike/programi/strength.jpg" alt="Strength Training" class="ikona">
-                <h3>Moč</h3>
-                <p>Program za povečanje moči in mišične mase.</p>
-            </div>
-            <div class="col-sm-4">
-                <img src="slike/programi/cardio.jpg" alt="Cardio" class="ikona">
-                <h3>Cardio</h3>
-                <p>Program za izboljšanje vzdržljivosti in zdravja srca.</p>
-            </div>
-            <div class="col-sm-4">
-                <img src="slike/programi/yoga.jpg" alt="Yoga" class="ikona">
-                <h3>Yoga</h3>
-                <p>Program za fleksibilnost, sprostitev in ravnotežje.</p>
-            </div>
-        </div>
-    </div>
 
     <!-- Fitnes zgodbe strank -->
-    <section id="about" class="container text-center">
-        <h2>Uspešne Zgodbe Strank</h2>
-        <p>Naši člani so dosegli neverjetne rezultate. Preberi njihove zgodbe in začni svojo pot danes!</p>
-        <div class="row">
-            <div class="col-sm-4">
-                <img src="slike/testimonials/stranka1.jpg" class="img-circle" alt="Stranka 1">
-                <h3>Janez Novak</h3>
-                <p>“Hvala FitRise Slovenija za pomoč pri dosegi mojih ciljev! Nikoli nisem bil bolj fit!”</p>
-            </div>
-            <div class="col-sm-4">
-                <img src="slike/testimonials/stranka2.jpg" class="img-circle" alt="Stranka 2">
-                <h3>Maja Kovač</h3>
-                <p>“Izboljšala sem svojo vzdržljivost in pridobila ogromno samozavesti. Super izkušnja!”</p>
-            </div>
-            <div class="col-sm-4">
-                <img src="slike/testimonials/stranka3.jpg" class="img-circle" alt="Stranka 3">
-                <h3>Marko Horvat</h3>
-                <p>“Z uporabo pravilne prehrane in treningov sem dosegel vrhunske rezultate v le nekaj mesecih!”</p>
+    <section id="about">
+        <div>
+            <h2>Trenutno stevilo ljudi v fitnesu:</h2>
+            <div>
+                <h3 id="stevilo">Loading...</h3>
             </div>
         </div>
     </section>
@@ -168,4 +133,22 @@
     </footer>
 
 </body>
+
+<script>
+    function numberOfPeople() {
+        $.ajax({
+            url: '/numberOfPeople',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                document.getElementById('stevilo').innerText = data.number;
+            },
+            error: function(xhr, status, error) {
+                console.error('Napaka pri pridobivanju podatkov:', error);
+            }
+        });
+    }
+    numberOfPeople();
+    setInterval(numberOfPeople, 4000);
+</script>
 </html>

@@ -62,11 +62,7 @@
             
             <div id="error-message" style="color: red; display: none;"></div>
             
-            <div id="login-container">
-                
-                <form action=/Login method="post">
-                
-                
+            <div id="login-container">   
                 <div>
                     <label for="username">Uporabniško ime:</label>
                     <input type="text" placeholder="ime" name="username" id="username" required class="form-control">
@@ -74,7 +70,13 @@
                 
                 <div>
                     <label for="password">Geslo:</label>
-                    <input type="password" placeholder="geslo" name="password" id="password" required class="form-control">
+                    <input type="text" placeholder="geslo" name="password" id="password" required class="form-control">
+                    <button onclick="generatePassword()">Generiraj geslo</button>
+                </div>
+                
+                <div>
+                    <label for="veljavnost">Veljavnost karte:</label>
+                    <input type="text" placeholder="Veljavnost karte(v dneh)" name="veljavnost" id="veljavnost" required class="form-control">
                 </div>
 
                 <div>
@@ -82,9 +84,8 @@
                     <input type="text" placeholder="UID" name="UID" id="UID" required class="form-control">
                 
                 <div>
-                    <button onclick="Register()">Prijava</button>
+                    <button onclick="Register()">Registriraj</button>
                 </div>
-                </form>
             </div>
         </div>
     </div>
@@ -108,13 +109,26 @@
 
     <!-- JavaScript za prijavo -->
     <script>
+        function generatePassword(){
+            const len = 8;
+            const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
+            let pass = "";
+            for (let i = 0; i < len; i++){
+                const rnd = Math.random() * charset.length;
+                let rand = Math.floor(rnd);
+                pass += charset[rand]; 
+            }
+            document.getElementById('password').value = pass;
+        };
+
         function Register() {
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value.trim();
             const uid = document.getElementById('UID').value.trim();
+            const veljavnost = document.getElementById('veljavnost').value.trim();
             const errorMessage = document.getElementById('error-message');
             
-            if (username === '' || password === '' || uid === '') {
+            if (username === '' || password === '' || uid === '' || veljavnost === '') {
                 errorMessage.textContent = 'Vsi podatki so obvezni za registracijo!';
                 errorMessage.style.display = 'block';
                 return;
@@ -128,13 +142,15 @@
                 data: {
                     username: username,
                     password: password,
+                    veljavnost: veljavnost,
                     uid: uid
                 },
                 dataType: 'json',
                 success: function(response) {
                     if (response.success) {
                         // Preusmeri na glavno stran
-                        window.location.href = '/';
+                        errorMessage.textContent = 'Uporabnik uspešno registriran!';
+                        errorMessage.style.display = 'block';
                     } else {
                         // Prikaži sporočilo o napaki
                         errorMessage.textContent = response.error;
