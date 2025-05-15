@@ -23,6 +23,40 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- pisava Google Fonts: Roboto -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <style>
+    .fitnes-komponenta {
+        background-color: #ffffff;
+        padding: 30px 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .fitnes-naslov {
+        font-size: 22px;
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    .fitnes-stevilo {
+        font-size: 50px;
+        font-weight: bold;
+        color: red;
+        margin: 0;
+    }
+
+    @media (max-width: 500px) {
+        .fitnes-komponenta {
+            padding: 20px;
+        }
+
+        .fitnes-stevilo {
+            font-size: 36px;
+        }
+    }
+</style>
 </head>
 <body>
     <header>
@@ -65,6 +99,7 @@
             <li data-target="#myCarousel" data-slide-to="1"></li>
             <li data-target="#myCarousel" data-slide-to="2"></li>
           </ol>
+          
       
           <!-- Okvir vrtiljaka slik -->
         <div class="carousel-inner" role="listbox">
@@ -92,6 +127,7 @@
                 </div>
             </div>
         </div>
+        
       
           <!-- Leva in desna kontrolna puščica -->
           <a class="left carousel-control" href="#myCarousel" data-slide="prev">
@@ -104,17 +140,18 @@
           </a>
         </div>
       </section>
+      
 
 
     <!-- Fitnes zgodbe strank -->
-    <section id="about">
+<section id="fitnes-status" class="fitnes-komponenta">
+    <div class="fitnes-vsebina">
+        <h2 class="fitnes-naslov">Trenutno število ljudi v fitnesu:</h2>
         <div>
-            <h2>Trenutno stevilo ljudi v fitnesu:</h2>
-            <div>
-                <h3 id="stevilo">Loading...</h3>
-            </div>
+            <h3 id="stevilo" class="fitnes-stevilo">Loading...</h3>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Okvir noge z dvema stolpcema -->
     <footer class="container-fluid text-center">
