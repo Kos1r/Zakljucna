@@ -10,6 +10,8 @@ app.secret_key = "FitRiseGym"
 db = TinyDB('stranke.json')
 User = Query()
 table=db.table('Tabela')
+scanCount = db.table('ScanCount')
+
 uids = []
 registration = []
 @app.route('/')
@@ -105,6 +107,17 @@ def getNFC(ID):
     global uids
     global registration
     registrated = db.table('Tabela').search(User.Uid == ID)
+    try:
+        with open('stranke.json', 'r') as f:
+            data = json.load(f)
+        ime = ""
+        for i, user in data['Tabela'].items():
+            if user['Uid'] == ID:
+                ime = user['Name']
+                break
+    except Exception as e:
+        print(e)
+
     if not registrated:
         registration.append(ID)
     else:
@@ -112,6 +125,7 @@ def getNFC(ID):
             uids.remove(ID)
         else:
             uids.append(ID)
+            scanCount.insert({"Name": ime,"Uid": ID, "count": 1})
     print(ID)
     print(f"Registered: {uids}")
     print(f"Unregistered: {registration}")
