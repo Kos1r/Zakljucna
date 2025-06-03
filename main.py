@@ -118,6 +118,9 @@ def getEmail():
 @app.route('/loged')
 def loged():
     cnt = 0
+    dan = 0
+    ure = 0
+    date = ""
     if 'username' not in session:
         return redirect(url_for('login'))
     else:
@@ -125,10 +128,21 @@ def loged():
             if i.get("Name") == session['username']:
                 cnt = i.get("count")
                 break
-        for j in Tabela.all():
-            pass
+        for j in table.all():
+            if j.get("Name") == session['username']:
+                date = j.get("Duration")
+                dur_date = datetime.strptime(date, "%d-%m-%Y")
+                today = datetime.now()
+                razlika = dur_date - today
+                if razlika.days < 0:
+                    return render_template('expired.html')
+                else:
+                    dan = razlika.days
+                    ure = razlika.seconds // 3600
 
-    return render_template('loged.html',cnt=cnt)
+            
+
+    return render_template('loged.html',cnt=cnt, dan=dan, ure=ure, date=date)
 
 @app.route("/getNFC/<ID>")
 def getNFC(ID):
