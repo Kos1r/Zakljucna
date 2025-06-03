@@ -112,13 +112,13 @@
             
         $.ajax({
         url: "/getEmail",       
-        method: "GET",           
+        method: "POST",           
         data: { username: username,
                 email: email 
         }, 
         success: function(odgovor) {
             // Kaj naredimo ko dobimo odgovor
-            window.location.href = "/";
+            alert("email z cec informacijami o paketih je bil uspesno poslan na " + email);
         }
     });
 }

@@ -3,6 +3,8 @@ from tinydb import TinyDB, Query
 from datetime import datetime, timedelta
 import json
 import requests
+import smtplib
+from email.mime.text import MIMEText
 
 app = Flask(__name__)
 app.secret_key = "FitRiseGym"
@@ -89,18 +91,43 @@ def paketi():
 def info():
     return render_template('info.html')
 
-@app.route('/getEmail', methods=['GET'])
+@app.route('/getEmail', methods=['POST'])
 def getEmail():
-    ime = request.args.get('username')
-    email = request.args.get('email')
+    ime = request.form["username"]
+    email = request.form["email"]
     print(ime, email)
-    return jsonify({"rez": ime})
+    #vsebina
+    sender = "fitriseslovenija@gmail.com"
+    reciver = email
+    subject = "FitRiseSlovenija - informacije o paketu"
+    body = f"Zdravo {ime} tukaj je mail o paketih bla bla bla"
+
+    #gradba maila
+    mail = MIMEText(body)
+    mail["subject"] = subject
+    mail["from"] = sender
+    mail["to"] = reciver
+
+    #posilanje
+    smtp = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+    smtp.login(sender, "ijvr ayvt irxd ekap")
+    smtp.send_message(mail)
+    smtp.quit()
+    return jsonify({'success': True})
 
 @app.route('/loged')
 def loged():
+    cnt = 0
     if 'username' not in session:
         return redirect(url_for('login'))
-    return render_template('loged.html')
+    else:
+        for i in scanCount.all():
+            if i.get("Name") == session['username']:
+                cnt = i.get("count")
+                break
+        for j in Tabela.all():
+
+    return render_template('loged.html',cnt=cnt)
 
 @app.route("/getNFC/<ID>")
 def getNFC(ID):
@@ -125,7 +152,15 @@ def getNFC(ID):
             uids.remove(ID)
         else:
             uids.append(ID)
-            scanCount.insert({"Name": ime,"Uid": ID, "count": 1})
+            sc = 0
+            javljen = db.table('ScanCount').search(User.Uid == ID)
+            if javljen:
+                for i in scanCount.all():
+                    if i.get("Uid") == ID:
+                        sc = i.get("count")
+                scanCount.update({"count": sc + 1})
+            else:
+                scanCount.insert({"Name": ime, "Uid": ID, "count": 1})
     print(ID)
     print(f"Registered: {uids}")
     print(f"Unregistered: {registration}")

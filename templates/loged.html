@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- pisava Google Fonts: Roboto -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='loged.css') }}">
 </head>
 <body>
     <header>
@@ -55,6 +56,17 @@
             </div>        
         </nav>
     </header>
+
+    <section>
+        <div>
+            <h1> Pozdravljen {{ session.get('username')}}! </h1>
+            <h3>Tvoji obiski našega fitnesa: {{cnt}} - krat</h3>
+            <h3>Karto imas veljavno se </h3>
+
+        </div>
+
+
+    </section>
 
     <!-- Okvir noge z dvema stolpcema -->
     <footer class="container-fluid text-center">
