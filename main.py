@@ -126,6 +126,7 @@ def loged():
                 cnt = i.get("count")
                 break
         for j in Tabela.all():
+            pass
 
     return render_template('loged.html',cnt=cnt)
 
