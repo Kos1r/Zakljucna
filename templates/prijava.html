@@ -10,7 +10,7 @@
     <!-- kodiranje avtor itd -->   
     <meta charset="utf-8">
     <meta name="description" content="FitRise Slovenija: Tvoje želje, naš cilj">
-    <meta name="author" content="FitRiseSlovenija, Jošt Košir, Teo Makarič">
+    <meta name="author" content="FitRiseSlovenija, Jošt Košir">
     <!-- zdruzljivost z brskalniki privzeta velikost elementov -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -69,7 +69,7 @@
             
             <div id="login-container">
                 <div>
-                    <label for="username">Uporabniško ime:</label>
+                    <label for="username">Elektronska pošta: </label>
                     <input type="text" placeholder="ime" name="username" id="username" required class="form-control">
                 </div>
                 
@@ -80,6 +80,9 @@
                 
                 <div>
                     <button onclick="loginOrRegister()">Prijava</button>
+                </div>
+                <div>
+                    <a href="/register">Še nimate fitrise računa?</a>
                 </div>
             </div>
         </div>
@@ -159,6 +162,10 @@
         <script>
             alert("{{ error }}");
         </script>
+    {% endif %}
+    
+    {% if alert_msg %}
+        <script>alert("{{ alert_msg }}");</script>
     {% endif %}
 </body>
 </html>

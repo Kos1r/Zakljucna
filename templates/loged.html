@@ -1,88 +1,118 @@
 <!DOCTYPE html>
 <html lang="sl">
 <head>
-    <!-- Title -->
-    <title>FitRise Slovenija: Tvoje želje, naš cilj</title>
-    <!-- Ikona -->
+    <title>FitRise Profil: {{ session.get('username') }}</title>
     <link rel="icon" href="{{ url_for('static', filename='Gym.ico') }}" type="image/x-icon">
-    <!-- Povezava css -->
+    
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <!-- kodiranje avtor itd -->   
+    <link rel="stylesheet" href="{{ url_for('static', filename='loged.css') }}">
+    
     <meta charset="utf-8">
-    <meta name="description" content="FitRise Slovenija: Tvoje želje, naš cilj">
-    <meta name="author" content="FitRiseSlovenija, Jošt Košir, Teo Makarič">
-    <!-- zdruzljivost z brskalniki privzeta velikost elementov -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- bootstrap css -->
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!-- jquery, bootstrap js -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- Ikone Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- pisava Google Fonts: Roboto -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='loged.css') }}">
 </head>
 <body>
+
     <header>
-        <nav class="navbar navbar-inverse">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <!-- gumb menija -->
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#meni">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>                        
+                        <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>                        
                     </button>
-                    <!-- logotip -->
                     <a class="navbar-brand" href="/"><img src="{{ url_for('static', filename='Gym.jpg') }}" alt="logotip"></a>
                 </div>
-                
-                <!-- meni, ki se na manjših zaslonih skrči -->            
                 <div class="collapse navbar-collapse" id="meni">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="/">Domov</a></li>
                         {% if 'username' in session %}
                         <li class="active"> <a href="/loged">{{ session.get('username')}}</a></li>
-                        <li><a href="/logout">Odjava</a></li>
-                        {% else %}
-                        <li><a href="/login">Prijava</a></li>
-                        {% endif %}
                         <li><a href="/paketi">Paketi</a></li>
+                        <li><a href="/logout">Odjava</a></li>
+                        {% endif %}
                     </ul>
                 </div>                
             </div>        
         </nav>
     </header>
 
-    <section>
-        <div>
-            <h1> Pozdravljen {{ session.get('username')}}! </h1>
-            <h3>Tvoji obiski našega fitnesa: {{cnt}} - krat</h3>
-            <h3>Karta ti potece {{date}} , cez {{dan}} dni in {{ure}} ur </h3>
-
+    <div class="container dashboard-container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>Dobrodošel nazaj, <span class="highlight-red">{{ session.get('username').split('@')[0] }}</span>!</h1>
+                <p class="text-muted">Tvoja osebna statistika in status članstva.</p>
+                <hr style="border-color: #333;">
+            </div>
         </div>
 
+        <div class="row">
+            <div class="col-md-3 col-sm-6">
+                <div class="stat-card">
+                    <h4>Skupni obiski</h4>
+                    <h2>{{ cnt }}</h2>
+                    <p style="color: #4CAF50;"><i class="fa fa-arrow-up"></i> Odlična forma!</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="stat-card">
+                    <h4>Povp. trening</h4>
+                    <h2>{{ stats.avg_duration if stats else 0 }} <small style="color: white;">min</small></h2>
+                    <p class="text-muted">Zadnjih 10 obiskov</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="stat-card">
+                    <h4>Veljavnost članstva</h4>
+                    <h3>{{ date }}</h3>
+                    <div class="progress" style="height: 10px; background: #333; margin: 15px 0;">
+                        <div class="progress-bar progress-bar-danger" style="width: 75%;"></div>
+                    </div>
+                    <p class="text-muted">Še <strong>{{ dan }} dni</strong> do izteka.</p>
+                </div>
+            </div>
+        </div>
 
-    </section>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="chart-box">
+                    <h4 style="color: #888; margin-bottom: 20px;">POGOSTOST TRENINGOV</h4>
+                    <canvas id="visitsChart" height="150" 
+                        data-labels='{{ stats.labels|tojson if stats else ["Pon", "Tor", "Sre", "Čet", "Pet", "Sob", "Ned"]|tojson }}'
+                        data-values='{{ stats.weekly_data|tojson if stats else [0,0,0,0,0,0,0]|tojson }}'>
+                    </canvas>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="chart-box text-center" style="padding: 40px 20px;">
+                    <h4 style="color: #888;">MESEČNA PRISOTNOST</h4>
+                    <h1 class="percentage-display">{{ stats.goal_progress if stats else 0 }}%</h1>
+                    <p class="text-muted">Še malo do cilja!</p>
+                    <a href="/paketi" class="btn btn-danger btn-block" style="margin-top: 20px;">Nadgradi paket</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!-- Okvir noge z dvema stolpcema -->
     <footer class="container-fluid text-center">
         <div class="row">
-            <!-- Socialne ikone -->
             <div class="nogaLevo col-sm-6">
-                <a href="#" data-toggle="tooltip" data-placement="top" title="Facebook"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
-                <a href="#" data-toggle="tooltip" data-placement="top" title="Instagram"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a>
-                <a href="#" data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>
-                <a href="#" data-toggle="tooltip" data-placement="top" title="Youtube"><i class="fa fa-youtube-square fa-2x" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                <a href="#"><i class="fa fa-instagram fa-2x"></i></a>
+                <a href="#"><i class="fa fa-youtube-square fa-2x"></i></a>
             </div>
             <div class="nogaDesno col-sm-6">
-                © FitRise Slovenija, 2025
+                © FitRise Slovenija, 2026 | Powered by ESP32 Tech
             </div>
         </div>
     </footer>
 
+    <script src="{{ url_for('static', filename='loged.js') }}"></script>
 </body>
 </html>

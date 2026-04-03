@@ -1,181 +1,225 @@
 <!DOCTYPE html>
 <html lang="sl">
 <head>
-    <!-- Title -->
-    <title>FitRise Slovenija: Tvoje želje, naš cilj</title>
-    <!-- Ikona -->
+    <title>FitRise Admin: Upravljanje uporabnikov</title>
     <link rel="icon" href="{{ url_for('static', filename='Gym.ico') }}" type="image/x-icon">
-    <!-- Povezava css -->
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <!-- kodiranje avtor itd -->   
+    <link rel="stylesheet" href="{{ url_for('static', filename='paketi.css') }}">
     <meta charset="utf-8">
-    <meta name="description" content="FitRise Slovenija: Tvoje želje, naš cilj">
-    <meta name="author" content="FitRiseSlovenija, Jošt Košir, Teo Makarič">
-    <!-- zdruzljivost z brskalniki privzeta velikost elementov -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- bootstrap css -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!-- jquery, bootstrap js -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- Ikone Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- pisava Google Fonts: Roboto -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <!-- login kontejner css -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+
+    <style>
+        .input-locked {
+            pointer-events: none;
+            background-color: #f4f4f4 !important;
+            border: 1px solid transparent;
+            box-shadow: none;
+        }
+        
+        .uid-blur {
+            filter: blur(4px);
+        }
+        
+        .select-locked {
+            background-color: #eee !important;
+            cursor: not-allowed;
+            pointer-events: none;
+            color: #777;
+        }
+
+        .btn-unlock {
+            background-color: #333;
+            color: white;
+            border: 1px solid #444;
+            transition: 0.2s;
+        }
+        
+        .btn-unlock:hover {
+            background-color: #c00;
+            color: white;
+        }
+        
+        .btn-action-group {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .navbar-brand img {
+            height: 30px;
+        }
+
+        .form-control[readonly] {
+            cursor: default;
+        }
+    </style>
 </head>
 <body>
-    <div class="content">
-        <!-- Header z navigacijo -->
-         <header>
+    <header>
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <!-- gumb menija -->
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#meni">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>                        
                     </button>
-                    <!-- logotip -->
                     <a class="navbar-brand" href="/"><img src="{{ url_for('static', filename='Gym.jpg') }}" alt="logotip"></a>
                 </div>
                 
-                <!-- meni, ki se na manjših zaslonih skrči -->            
                 <div class="collapse navbar-collapse" id="meni">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="/">Domov</a></li>
-                        <li><a href="/logout">Odjava</a></li>
-                        <li><a href="/paketi">Fitnes paketi</a></li>
+                        {% if 'username' in session %}
+                            <li class="active"><a href="/loged">Control panel</a></li>
+                            <li><a href="/paketi">Paketi</a></li>
+                            <li><a href="/logout">Odjava</a></li>
+                        {% endif %}
                     </ul>
                 </div>                
             </div>        
         </nav>
     </header>
+
+    <div class="container-fluid" style="margin-top: 70px; min-height: 600px; padding: 0 30px;">
+        <h2>Admin panel <small>Upravljanje članov</small></h2>
+        <hr>
         
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }} alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
 
-        <!-- Login obrazec -->
-        <div class="container text-center">
-            <h1>Prijava</h1>
-            
-            <div id="error-message" style="color: red; display: none;"></div>
-            
-            <div id="login-container">   
-                <div>
-                    <label for="username">Uporabniško ime:</label>
-                    <input type="text" placeholder="ime" name="username" id="username" required class="form-control">
-                </div>
-                
-                <div>
-                    <label for="password">Geslo:</label>
-                    <input type="text" placeholder="geslo" name="password" id="password" required class="form-control">
-                    <button onclick="generatePassword()">Generiraj geslo</button>
-                </div>
-                
-                <div>
-                    <label for="veljavnost">Veljavnost karte:</label>
-                    <input type="text" placeholder="Veljavnost karte(v dneh)" name="veljavnost" id="veljavnost" required class="form-control">
-                </div>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Ime</th>
+                        <th>Priimek</th>
+                        <th>Email</th>
+                        <th>Registriran</th>
+                        <th>Veljavnost</th>
+                        <th style="width: 150px;">Paket</th>
+                        <th style="width: 180px;">UID kartice</th>
+                        <th style="width: 250px;">Akcije</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in uporabniki %}
+                    <tr>
+                        <form action="/admin/update_user" method="POST">
+                            <input type="hidden" name="original_email" value="{{ user.email }}">
+                            
+                            <td>
+                                <input type="text" name="name" id="name-{{ loop.index }}" 
+                                       class="form-control input-sm input-locked" value="{{ user.name }}" readonly>
+                            </td>
+                            <td>
+                                <input type="text" name="lastname" id="lastname-{{ loop.index }}" 
+                                       class="form-control input-sm input-locked" value="{{ user.lastName }}" readonly>
+                            </td>
+                            <td>
+                                <input type="email" name="username" id="email-{{ loop.index }}" 
+                                       class="form-control input-sm input-locked" value="{{ user.email }}" readonly>
+                            </td>
+                            <td style="vertical-align: middle;">{{ user.Registered }}</td>
+                            <td style="vertical-align: middle;">
+                                <span class="label {{ 'label-danger' if user.is_expired else 'label-success' }}">
+                                    {{ user.Duration if user.Duration and user.Duration != '0' else 'Ni aktivne karte' }}
+                                </span>
+                            </td>
 
-                <div>
-                    <label for="uid">UID:</label>
-                    <input type="text" placeholder="UID" name="UID" id="UID" required class="form-control">
-                
-                <div>
-                    <button onclick="Register()">Registriraj</button>
-                </div>
-            </div>
+                            <td>
+                                <select name="paket_tip" id="paket-{{ loop.index }}" 
+                                        class="form-control input-sm select-locked">
+                                    <option value="Basic" {{ 'selected' if user.Paket == 'Basic' }}>Basic paket</option>
+                                    <option value="All-in" {{ 'selected' if user.Paket == 'All-in' }}>All-in paket</option>
+                                </select>
+                            </td>
+                            
+                            <td>
+                                <input type="text" id="uid-{{ loop.index }}" name="uid" 
+                                       class="form-control input-sm input-locked uid-blur" 
+                                       value="{{ user.Uid }}" readonly>
+                            </td>
+
+                            <td>
+                                <div class="btn-action-group">
+                                    <button type="submit" name="action" value="save_all" class="btn btn-primary btn-sm">
+                                        <i class="fa fa-save"></i> Shrani
+                                    </button>
+                                    <button type="submit" name="action" value="podaljsaj" class="btn btn-success btn-sm">
+                                        <i class="fa fa-plus"></i> Podaljšaj
+                                    </button>
+                                    <button type="button" class="btn btn-unlock btn-sm" onclick="toggleEdit('{{ loop.index }}', this)">
+                                        <i class="fa fa-pencil"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </form>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <!-- Footer z informacijami -->
-     <footer class="container-fluid text-center">
+    <footer class="container-fluid text-center">
         <div class="row">
-            <!-- Socialne ikone -->
-            <div class="nogaLevo col-sm-6">
-                <a href="#" data-toggle="tooltip" data-placement="top" title="Facebook"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
-                <a href="#" data-toggle="tooltip" data-placement="top" title="Instagram"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a>
-                <a href="#" data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>
-                <a href="#" data-toggle="tooltip" data-placement="top" title="Youtube"><i class="fa fa-youtube-square fa-2x" aria-hidden="true"></i></a>
-            </div>
-            <div class="nogaDesno col-sm-6">
-                © FitRise Slovenija, 2025
+            <div class="col-sm-12">
+                <hr>
+                <p>© FitRise Slovenija, 2026</p>
             </div>
         </div>
     </footer>
-    
 
-    <!-- JavaScript za prijavo -->
     <script>
-        function generatePassword(){
-            const len = 8;
-            const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
-            let pass = "";
-            for (let i = 0; i < len; i++){
-                const rnd = Math.random() * charset.length;
-                let rand = Math.floor(rnd);
-                pass += charset[rand]; 
-            }
-            document.getElementById('password').value = pass;
-        };
-
-        function Register() {
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value.trim();
-            const uid = document.getElementById('UID').value.trim();
-            const veljavnost = document.getElementById('veljavnost').value.trim();
-            const errorMessage = document.getElementById('error-message');
+        function toggleEdit(index, btn) {
+            var fields = [
+                document.getElementById('name-' + index),
+                document.getElementById('lastname-' + index),
+                document.getElementById('email-' + index),
+                document.getElementById('uid-' + index)
+            ];
+            var paketSelect = document.getElementById('paket-' + index);
+            var isLocked = fields[0].classList.contains('input-locked');
             
-            if (username === '' || password === '' || uid === '' || veljavnost === '') {
-                errorMessage.textContent = 'Vsi podatki so obvezni za registracijo!';
-                errorMessage.style.display = 'block';
-                return;
-            }
-            
-            errorMessage.style.display = 'none';
-            
-            $.ajax({
-                url: '/Register',
-                type: 'POST',
-                data: {
-                    username: username,
-                    password: password,
-                    veljavnost: veljavnost,
-                    uid: uid
-                },
-                dataType: 'json',
-                success: function(response) {
-                    if (response.success) {
-                        // Preusmeri na glavno stran
-                        errorMessage.textContent = 'Uporabnik uspešno registriran!';
-                        errorMessage.style.display = 'block';
-                    } else {
-                        // Prikaži sporočilo o napaki
-                        errorMessage.textContent = response.error;
-                        errorMessage.style.display = 'block';
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Podrobnosti napake:', xhr.responseText);
-                    errorMessage.textContent = 'Prišlo je do napake. Poskusite znova.';
-                    errorMessage.style.display = 'block';
+            fields.forEach(function(el) {
+                if (isLocked) {
+                    el.classList.remove('input-locked');
+                    el.classList.remove('uid-blur');
+                    el.readOnly = false;
+                } else {
+                    el.classList.add('input-locked');
+                    if(el.id.includes('uid')) el.classList.add('uid-blur');
+                    el.readOnly = true;
                 }
             });
-        }
 
-        document.getElementById('username').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                Register();
+            if (isLocked) {
+                paketSelect.classList.remove('select-locked');
+                paketSelect.style.pointerEvents = "auto";
+                btn.innerHTML = '<i class="fa fa-unlock"></i>';
+                btn.style.backgroundColor = "#c00"; 
+            } else {
+                paketSelect.classList.add('select-locked');
+                paketSelect.style.pointerEvents = "none";
+                btn.innerHTML = '<i class="fa fa-pencil"></i>';
+                btn.style.backgroundColor = "#333";
             }
-        });
-        
-        document.getElementById('password').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                Register();
-            }
-        });
+        }
     </script>
 </body>
 </html>

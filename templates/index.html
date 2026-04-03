@@ -10,7 +10,7 @@
     <!-- kodiranje avtor itd -->   
     <meta charset="utf-8">
     <meta name="description" content="FitRise Slovenija: Tvoje želje, naš cilj">
-    <meta name="author" content="FitRiseSlovenija, Jošt Košir, Teo Makarič">
+    <meta name="author" content="FitRiseSlovenija, Jošt Košir">
     <!-- zdruzljivost z brskalniki privzeta velikost elementov -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -75,16 +75,23 @@
                 
                 <!-- meni, ki se na manjših zaslonih skrči -->            
                 <div class="collapse navbar-collapse" id="meni">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="/">Domov</a></li>
-                        {% if 'username' in session %}
-                        <li> <a href="/loged">{{ session.get('username')}}</a></li>
-                        <li><a href="/logout">Odjava</a></li>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="/">Domov</a></li>
+
+                    {% if 'username' in session %}
+                        {% if session.get('username') == 'admin' %}
+                            <li><a href="/loged">Control panel</a></li>
+                        
                         {% else %}
-                        <li><a href="/login">Prijava</a></li>
+                            <li ><a href="/loged">{{ session.get('username') }}</a></li>
                         {% endif %}
                         <li><a href="/paketi">Paketi</a></li>
-                    </ul>
+                        <li><a href="/logout">Odjava</a></li>
+                    {% else %}
+                        <li><a href="/login">Prijava</a></li>
+                        <li><a href="/paketi">Paketi</a></li>
+                    {% endif %}
+                </ul>
                 </div>                
             </div>        
         </nav>
@@ -107,23 +114,23 @@
                 <img src="{{ url_for('static', filename='slide1.jpg') }}" alt="slide1">
                 <div class="carousel-caption">
                     <p>FitRise Slovenija</p>
-                    <a href="#about" class="btn btn-default">Preverite zasedenost</a>
+                    <a href="#fitnes-status" class="btn btn-default">Preverite zasedenost</a>
                 </div>
             </div>
       
             <div class="item">
                 <img src="{{ url_for('static', filename='slide2.jpg') }}" alt="slide2">
                 <div class="carousel-caption">
-                    <p>Prijavite se še danes</p>
-                    <a href="#about" class="btn btn-default">Preverite zasedenost</a>
+                    <p>FitRise Slovenija</p>
+                    <a href="#fitnes-status" class="btn btn-default">Preverite zasedenost</a>
                 </div>
             </div>
       
             <div class="item">
                 <img src="{{ url_for('static', filename='slide3.jpg') }}" alt="slide3">
                 <div class="carousel-caption">
-                    <p>Prijavite se še danes</p>
-                    <a href="#about" class="btn btn-default">Preverite zasedenost</a>
+                    <p>FitRise Slovenija</p>
+                    <a href="#fitnes-status" class="btn btn-default">Preverite zasedenost</a>
                 </div>
             </div>
         </div>

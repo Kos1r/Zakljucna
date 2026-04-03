@@ -1,4 +1,80 @@
-body{
-    padding-top: 80px;
+/* loged.css */
 
+body {
+    background-color: #0f0f0f !important;
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    padding-top: 80px;
+}
+
+.dashboard-container {
+    margin-top: 20px;
+    padding-bottom: 50px;
+}
+
+/* Naslovi in besedila */
+.dashboard-container h1 {
+    font-weight: 700;
+    color: #ffffff; /* Prisilno belo besedilo */
+}
+
+.stat-card {
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 20px;
+    border-bottom: 4px solid transparent;
+    transition: 0.3s;
+}
+
+.stat-card:hover {
+    border-bottom: 4px solid #d9534f;
+}
+
+.stat-card h4 {
+    color: #aaaaaa;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-top: 0;
+}
+
+.stat-card h2, .stat-card h3 {
+    font-weight: 700;
+    color: #ffffff; /* Številke v karticah so bele */
+    margin: 10px 0;
+}
+
+.stat-card h2 {
+    font-size: 40px;
+}
+
+.highlight-red {
+    color: #d9534f;
+}
+
+/* Graf in Cilj */
+.chart-box {
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+/* Velika rdeča številka za procent cilja */
+.percentage-display {
+    font-size: 70px;
+    font-weight: 900;
+    color: #d9534f;
+    margin: 10px 0;
+}
+
+/* Navigacija in ostalo */
+.navbar-brand img {
+    max-height: 35px;
+    width: auto;
+    display: inline-block;
+}
+
+.progress-bar-danger {
+    background-color: #d9534f;
 }

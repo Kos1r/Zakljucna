@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <!-- Title -->
+    <title>FitRise Slovenija: Tvoje želje, naš cilj</title>
+    <!-- Ikona -->
+    <link rel="icon" href="{{ url_for('static', filename='Gym.ico') }}" type="image/x-icon">
+    <!-- Povezava css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- kodiranje avtor itd -->   
+    <meta charset="utf-8">
+    <meta name="description" content="FitRise Slovenija: Tvoje želje, naš cilj">
+    <meta name="author" content="FitRiseSlovenija, Jošt Košir">
+    <!-- zdruzljivost z brskalniki privzeta velikost elementov -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jquery, bootstrap js -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- Ikone Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- pisava Google Fonts: Roboto -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <!-- login kontejner css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+</head>
+<body>
+    <div class="content">
+        <!-- Header z navigacijo -->
+         <header>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <!-- gumb menija -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#meni">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>                        
+                    </button>
+                    <!-- logotip -->
+                    <a class="navbar-brand" href="/"><img src="{{ url_for('static', filename='Gym.jpg') }}" alt="logotip"></a>
+                </div>
+                
+                <!-- meni, ki se na manjših zaslonih skrči -->            
+                <div class="collapse navbar-collapse" id="meni">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/">Domov</a></li>
+                        {% if 'username' in session %}
+                        <li> <a href="/loged">{{ session.get('username')}}</a></li>
+                        <li><a href="/logout">Odjava</a></li>
+                        {% else %}
+                        <li><a href="/login">Prijava</a></li>
+                        {% endif %}
+                        <li><a href="/paketi">Paketi</a></li>
+                    </ul>
+                </div>                
+            </div>        
+        </nav>
+    </header>
+        
+
+        <!-- Login obrazec -->
+        <div class="container text-center">
+            <h1>Registracija</h1>
+            
+            <div id="error-message" style="color: red; display: none;"></div>
+            
+            <div id="login-container">
+                <div>
+                    <label for="name">Ime </label>
+                    <input type="text" placeholder="ime" name="name" id="name" required class="form-control">
+                </div>
+
+                <div>
+                    <label for="lastname">Priimek: </label>
+                    <input type="text" placeholder="Priimek" name="lastname" id="lastname" required class="form-control">
+                </div>
+
+                <div>
+                    <label for="username">Elektronska pošta: </label>
+                    <input type="text" placeholder="Elektronska pošta" name="username" id="username" required class="form-control">
+                </div>
+                
+                <div>
+                    <label for="password">Geslo:</label>
+                    <input type="password" placeholder="geslo" name="password" id="password" required class="form-control">
+                </div>
+                <div>
+                    <label for="password">Ponovite geslo:</label>
+                    <input type="password" placeholder="ponovite geslo" name="password" id="repassword" required class="form-control">
+                </div>
+                
+                <div>
+                    <button onclick="Register()">Registracija</button>
+                </div>
+                <div>
+                    <a href="/login">Že imate Fitrise račun? </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer z informacijami -->
+     <footer class="container-fluid text-center">
+        <div class="row">
+            <!-- Socialne ikone -->
+            <div class="nogaLevo col-sm-6">
+                <a href="#" data-toggle="tooltip" data-placement="top" title="Facebook"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
+                <a href="#" data-toggle="tooltip" data-placement="top" title="Instagram"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a>
+                <a href="#" data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>
+                <a href="#" data-toggle="tooltip" data-placement="top" title="Youtube"><i class="fa fa-youtube-square fa-2x" aria-hidden="true"></i></a>
+            </div>
+            <div class="nogaDesno col-sm-6">
+                © FitRise Slovenija, 2025
+            </div>
+        </div>
+    </footer>
+    
+
+    <!-- JavaScript za prijavo -->
+    <script>
+        function Register() {
+            const name = document.getElementById('name').value.trim();
+            const lastname = document.getElementById('lastname').value.trim();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const repassword = document.getElementById('repassword').value.trim();
+            const errorMessage = document.getElementById('error-message');
+            
+            if (username === '' || password === '' || repassword === '') {
+                errorMessage.textContent = 'Uporabniško ime in geslo sta obvezna!';
+                errorMessage.style.display = 'block';
+                return;
+            }
+            if (password != repassword){
+                errorMessage.textContent = 'Gesli se ne ujemata';
+                errorMessage.style.display = 'block';
+                return; 
+            }
+            
+            errorMessage.style.display = 'none';
+            
+            $.ajax({
+                url: '/Register',
+                type: 'POST',
+                data: {
+                    name: name,
+                    lastname: lastname,
+                    username: username,
+                    password: password,
+                    repassword: repassword
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        document.getElementById('login-container').innerHTML = 
+                        "<div class='alert alert-success'><h4>Preverite e-pošto!</h4>" +
+                        "<p>Poslali smo vam povezavo za potrditev računa.</p></div>";
+                    } else {
+                        // Prikaži sporočilo o napaki
+                        errorMessage.textContent = response.error;
+                        errorMessage.style.display = 'block';
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Podrobnosti napake:', xhr.responseText);
+                    errorMessage.textContent = 'Prišlo je do napake. Poskusite znova.';
+                    errorMessage.style.display = 'block';
+                }
+            });
+        }
+        // shortcut confirmation name
+        document.getElementById('name').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                Register();
+            }
+        });
+        //lastname
+        document.getElementById('lastname').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                Register();
+            }
+        });
+
+        // shortcut confirmation - email field
+        document.getElementById('username').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                Register();
+            }
+        });
+        // geslo
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                Register();
+            }
+        });
+        //ponovno geslo
+        document.getElementById('repassword').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                Register();
+            }
+        });
+    </script>
+    {% if error %}
+        <script>
+            alert("{{ error }}");
+        </script>
+    {% endif %}
+</body>
+</html>

@@ -1,29 +1,22 @@
 <!DOCTYPE html>
 <html lang="sl">
 <head>
-    <!-- Title -->
-    <title>FitRise Paketi: Izberi paket, ki ustreza tvojim potrebam</title>
-    <!-- Ikona -->
-    <link rel="icon" href="{{ url_for('static', filename='Gym.ico') }}" type="image/x-icon">
-    <!-- Povezava css -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='paketi.css') }}">
-    <!-- kodiranje avtor itd -->   
     <meta charset="utf-8">
-    <meta name="description" content="FitRise Paketi: Izberi paket, ki ustreza tvojim potrebam">
-    <meta name="author" content="FitRiseSlovenija">
-    <!-- zdruzljivost z brskalniki privzeta velikost elementov -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- bootstrap css -->
+    <title>FitRise Paketi: Izberi svoj paket</title>
+    
+    <link rel="icon" href="{{ url_for('static', filename='Gym.ico') }}" type="image/x-icon">
+    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!-- jquery, bootstrap js -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='paketi.css') }}">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- Ikone Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- pisava Google Fonts: Roboto -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -42,99 +35,93 @@
                 
                 <!-- meni, ki se na manjših zaslonih skrči -->            
                 <div class="collapse navbar-collapse" id="meni">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/">Domov</a></li>
-                        {% if 'username' in session %}
-                        <li> <a href="/loged">{{ session.get('username')}}</a></li>
-                        <li><a href="/logout">Odjava</a></li>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/">Domov</a></li>
+
+                    {% if 'username' in session %}
+                        {% if session.get('username') == 'admin' %}
+                            <li><a href="/loged">Control panel</a></li>
+                        
                         {% else %}
-                        <li><a href="/login">Prijava</a></li>
+                            <li ><a href="/loged">{{ session.get('username') }}</a></li>
                         {% endif %}
                         <li class="active"><a href="/paketi">Paketi</a></li>
-                    </ul>
+                        <li><a href="/logout">Odjava</a></li>
+                    {% else %}
+                        <li><a href="/login">Prijava</a></li>
+                        <li><a href="/paketi">Paketi</a></li>
+                    {% endif %}
+                </ul>
                 </div>                
             </div>        
         </nav>
     </header>
 
-    <!-- FitRise PAKETI -->
-    <section id="fitrise-paketi">
-        <h1>FitRise Paketi</h1>
-        <p>Izberi paket, ki ustreza tvojim potrebam!</p>
-        <div class="paket-row">
-            <div class="paket osnovni">
-                <h2>Starter Paket</h2>
-                <ul>
-                    <li>1 - mesečna vezava</li>
-                    <li> Fitnes 24/7</li>
-                    <li>Ni vpisnine</li>
-                    <li>Savna</li>
-                    <li>xxx</li>
-                    <li>xxx</li>
-                    <li>xxx</li>
-                    <li>xxx</li>
-                </ul>
-                <a href="/info" class="btn-primary">Več možnosti ...</a>
+    <main class="cenik-container">
+        <div class="container">
+            <div class="text-center">
+                <h1 class="glavni-naslov">FITRISE CENIK</h1>
+                <div class="divider"></div>
             </div>
-            <div class="paket aktivni">
-                <h2>Aktivni Paket</h2>
-                <ul>
-                    <li>xxx</li>
-                    <li>xxx</li>
-                    <li>xxx</li>
-                    <li>xxx</li>
-                    <li>xxx</li>
-                    <li>xxx</li>
-                    <li>xx</li>
-                </ul>
-                <a href="/info" class="btn-primary">Več možnosti ...</a>
-            </div>
-            <div class="paket napredni">
-                <h2>Napredni Paket</h2>
-                <ul>
-                    <li>xx</li>
-                    <li>xx</li>
-                    <li>xx</li>
-                    <li>xxx</li>
-                    <li>Xx</li>
-                    <li>xx</li>
-                    <li>Xx</li>
-                    <li>xx</li>
-                </ul>
-                <a href="/info" class="btn-primary">Več možnosti ...</a>
-            </div>
-            <div class="paket premium">
-                <h2>Premium Paket</h2>
-                <ul>
-                    <li>x</li>
-                    <li>x</li>
-                    <li>x</li>
-                    <li>x</li>
-                    <li>x </li>
-                    <li>x</li>
-                    <li>x</li>
-                    <li>x</li>
-                </ul>
-                <a href="/info" class="btn-primary">Več možnosti ...</a>
+
+            <div class="row display-flex">
+                <div class="col-md-6">
+                    <div class="paket-card highlight">
+                        <div class="paket-header">
+                            <h2>ALL-IN PAKET</h2>
+                            <p class="podnaslov">Mesečni preklic</p>
+                        </div>
+                        <div class="paket-body">
+                            <div class="cena">49.90<span>€/m</span></div>
+                            <ul class="prednosti">
+                                <li><i class="fa fa-check-circle"></i> Masažna postelja & Solarij</li>
+                                <li><i class="fa fa-check-circle"></i> Zamrznitev članstva</li>
+                                <li><i class="fa fa-check-circle"></i> Mineralni napitki</li>
+                                <li><i class="fa fa-check-circle"></i> Brezplačni tuši</li>
+                                <li><i class="fa fa-check-circle"></i> Brezplačni Wi-Fi</li>
+                                <li><i class="fa fa-check-circle"></i> Treniraj v vseh studiih</li>
+                            </ul>
+                            <a href="/login" class="btn-vpisi">VPIŠI SE</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="paket-card">
+                        <div class="paket-header">
+                            <h2>BASIC PAKET</h2>
+                            <p class="podnaslov">Mesečni preklic</p>
+                        </div>
+                        <div class="paket-body">
+                            <div class="cena">39.90<span>€/m</span></div>
+                            <ul class="prednosti">
+                                <li><i class="fa fa-check-circle"></i> Mineralni napitki</li>
+                                <li><i class="fa fa-check-circle"></i> Brezplačni tuši</li>
+                                <li><i class="fa fa-check-circle"></i> Brezplačni Wi-Fi</li>
+                                <li><i class="fa fa-check-circle"></i> Treniraj v vseh studiih</li>
+                                <li class="disabled"><i class="fa fa-times-circle"></i> Masažna postelja</li>
+                                <li class="disabled"><i class="fa fa-times-circle"></i> Zamrznitev članstva</li>
+                            </ul>
+                            <a href="/login" class="btn-vpisi">VPIŠI SE</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
+    </main>
 
-    <!-- Okvir noge z dvema stolpcema -->
     <footer class="container-fluid text-center">
         <div class="row">
-            <!-- Socialne ikone -->
             <div class="nogaLevo col-sm-6">
-                <a href="#" data-toggle="tooltip" data-placement="top" title="Facebook"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
-                <a href="#" data-toggle="tooltip" data-placement="top" title="Instagram"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a>
-                <a href="#" data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>
-                <a href="#" data-toggle="tooltip" data-placement="top" title="Youtube"><i class="fa fa-youtube-square fa-2x" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                <a href="#"><i class="fa fa-instagram fa-2x"></i></a>
+                <a href="#"><i class="fa fa-twitter-square fa-2x"></i></a>
+                <a href="#"><i class="fa fa-youtube-square fa-2x"></i></a>
             </div>
             <div class="nogaDesno col-sm-6">
-                © FitRise Slovenija, 2025
+                © FitRise Slovenija, 2026
             </div>
         </div>
     </footer>
-
 </body>
 </html>

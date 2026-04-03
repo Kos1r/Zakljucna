@@ -1,38 +1,41 @@
-html{
+html {
     scroll-behavior: smooth;
 }
+
 /* Globalne nastavitve za telo strani */
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #f4f4f4;
     margin: 0;
-    padding: 0 0 0 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Zagotovi, da telo strani prekriva celotno višino zaslona */
+    min-height: 100vh;
 }
 
 /* Header */
 header {
     position: fixed;
-    z-index: 999;
+    z-index: 9999;
     width: 100%;
     top: 0;
 }
-.navbar-header img{
+
+.navbar-header img {
     padding-left: 10px;
     padding-bottom: 1px;
 }
 
 /* Nastavitve za navigacijski meni */
 .navbar-inverse {
-    background-color: #222; /* Črna barva ozadja */
+    background-color: #222;
     border-color: #222;
-    z-index: 999;
+    z-index: 9999;
     position: fixed;
     top: 0;
-    width: 100%; /* Poglobljena širina za navigacijo */
+    width: 100%;
     padding: 10px 0;
+    margin-bottom: 0;
 }
 
 .navbar-inverse .navbar-brand img {
@@ -41,28 +44,38 @@ header {
 
 .navbar-inverse .navbar-nav > li > a {
     position: relative;
-    color: #fff; /* Bela barva besedila na gumbih */
+    color: #fff !important;
     padding: 15px 20px;
     font-size: 18px;
     text-transform: uppercase;
     display: inline-block;
     overflow: hidden;
     text-align: center;
-    background-color: #222;
-    transition: color 0.3s ease-in-out, background-color 0.3s ease;
+    background-color: transparent !important; /* Osnovno stanje je prozorno */
+    transition: all 0.3s ease-in-out;
     border-radius: 4px;
 }
 
-/* Animacija gumba */
+/* --- KLJUČNI POPRAVEK ZA AKTIVNI GUMB --- */
+/* Bootstrap 3 uporablja te specifične selektorje za .active - tukaj silimo ČRNO ozadje */
+.navbar-inverse .navbar-nav > .active > a, 
+.navbar-inverse .navbar-nav > .active > a:hover, 
+.navbar-inverse .navbar-nav > .active > a:focus {
+    background-color: #000 !important; /* Popolnoma črna */
+    color: #fff !important;
+    box-shadow: none !important;
+}
+
+/* Animacija črtic (::before in ::after) */
 .navbar-inverse .navbar-nav > li > a::before,
 .navbar-inverse .navbar-nav > li > a::after {
     content: "";
     position: absolute;
     width: 100%;
     height: 3px;
-    background-color: #FF5733; /* Rdeča barva za animacijo */
+    background-color: #FF5733; 
     transition: all 0.3s ease;
-    z-index: -1;
+    z-index: 10;
 }
 
 .navbar-inverse .navbar-nav > li > a::before {
@@ -75,202 +88,74 @@ header {
     right: -100%;
 }
 
+/* Sprožitev črtic SAMO na hover - velja za vse gubme, tudi aktivnega */
 .navbar-inverse .navbar-nav > li > a:hover::before {
-    left: 0%;
+    left: 0% !important;
 }
 
 .navbar-inverse .navbar-nav > li > a:hover::after {
-    right: 0%;
+    right: 0% !important;
 }
 
-.navbar-inverse .navbar-nav > li > a:hover {
-    background-color: #FF5733; /* Rdeča barva ozadja */
-    color: #fff; /* Bela barva besedila */
+/* Prisilno skrijemo črtice, ko miške NI na gumbu (tudi če je aktiven) */
+.navbar-inverse .navbar-nav > li.active > a:not(:hover)::before {
+    left: -100% !important;
+}
+
+.navbar-inverse .navbar-nav > li.active > a:not(:hover)::after {
+    right: -100% !important;
 }
 
 /* Vrtiljak slik - Carousel */
-.item img { width: 100%;
-    height: auto; /* Prilagodi višino slike */
-    max-height: 970px   ; /* Omeji višino vrtiljaka */
-    object-fit: cover; /* Ohranimo razmerje stranic slik */
+.item img { 
+    width: 100%;
+    height: auto;
+    max-height: 970px;
+    object-fit: cover;
 }
 
-
-/* Položaj napisa na slikah vrtiljaka */
 .carousel-caption {
-   top: 55%;
-   transform: translateY(-70%);
+    top: 55%;
+    transform: translateY(-70%);
 }
 
-/* Oblika napisa na slikah vrtiljaka */
 .carousel-caption p {
     font-size: 4em;
-    color:  white;	
+    color: white;  
     font-weight: bold;
     text-transform: uppercase;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Dodaj senco za boljšo berljivost */
-    text-align: center; /* Poravnaj besedilo na sredino */
-
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-align: center;
 }
 
-/* Gumb na sliki vrtiljaka */
-.carousel-caption button {
-    margin-top: 1.5em;
-}
-
-.carousel-caption .btn {
-    font-size: 1.2em;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: black;
-    background-color: white; /* Make the background transparent */
-    padding: 12px 22px;
-    border: 1px solid; /* Keep the border white */
-    position: relative; /* Necessary for positioning pseudo-elements */
-    overflow: hidden; /* Ensures pseudo-elements stay within the button */
-    transition: color 0.4s ease, background-color 0.4s ease; /* Smooth transition */
-}
-
-/* Add pseudo-elements for animation */
-.carousel-caption .btn::before,
-.carousel-caption .btn::after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 3px;
-    background-color: #FF5733; /* Orange-Red for animation */
-    transition: all 0.4s ease; /* Smooth transition for lines */
-    z-index: -1; /* Place the lines behind the button content */
-}
-
-.carousel-caption .btn::before {
-    top: 0;
-    left: -100%;
-}
-
-.carousel-caption .btn::after {
-    bottom: 0;
-    right: -100%;
-}
-
-/* Hover effect for animation */
-.carousel-caption .btn:hover::before {
-    left: 0%; /* Slide the top line in */
-}
-
-.carousel-caption .btn:hover::after {
-    right: 0%; /* Slide the bottom line in */
-}
-
-.carousel-caption .btn:hover {
-    color: white; /* Text color changes to the purple color */
-    background-color: red; /* Background color turns white */
-    z-index: 1; /* Ensures button text is above the pseudo-elements */
-    transition: color 0.4s ease, background-color 0.4s ease;
-}
-
-/* Remove the focus outline */
-.carousel-caption .btn:focus {
-    outline: none;
-}
-
-
-/* Oblika napisov na slikah vrtiljaka pri različnih velikostih zaslona */
-@media (max-width: 1200px) {
-   .carousel-caption p {
-      font-size: 1.3em;
-   }
-   .carousel-caption button {
-      margin-top: 0em;	
-   }
-}
-
-@media (max-width: 940px) {
-   .carousel-caption button {
-      display: none;
-   }
-   .carousel-caption p {
-      font-size: 1.2em;
-   }
-}
-
-@media (max-width: 700px) {
-   .carousel-caption p {
-      font-size: 1.1em;
-      margin-top: -20px;
-   }
-}
-
-@media (max-width: 525px) {
-   .carousel-caption button {
-      display: none;
-   }
-   .carousel-caption p {
-      display: none;
-   }
-}
-
-/* Nastavitve za footer */
+/* Footer */
 footer {
-    background-color: #222; /* Črna barva ozadja */
+    background-color: #222;
     color: #fff;
     padding: 30px 0;
     position: relative;
-    width: 100%; /* Zagotovimo, da se footer raztegne čez celo širino */
-    margin-top: auto; /* Poskrbi, da se footer premakne na dno */
-    bottom: 0; /* Poskrbimo, da bo vedno na dnu */
+    width: 100%;
+    margin-top: auto;
 }
 
 footer .fa {
     color: #fff;
     margin-right: 15px;
+    transition: color 0.3s;
 }
 
 footer .fa:hover {
-    color: #FF5733; /* Rdeča barva pri hoverju */
+    color: #FF5733;
 }
 
 footer .nogaLevo, footer .nogaDesno {
-    margin: 0;
-    padding: 0;
-    text-align: center; /* Poravnaj vsebino na sredino */
+    text-align: center;
 }
 
-footer .nogaLevo {
-    padding-left: 10px;
-}
-
-footer .nogaDesno {
-    padding-right: 10px;
-}
-
-/* Programi fitnesa */
-.container.text-center {
-    margin-top: 80px;
-}
-
-/* Mobile Responsiveness */
+/* Odzivnost */
 @media screen and (max-width: 768px) {
-    .navbar-header {
-        width: 100%;
-        text-align: center;
-    }
-    
-    .navbar-inverse .navbar-nav {
-        text-align: center;
-    }
-    
     .navbar-inverse .navbar-nav > li {
-        display: inline-block;
-        margin: 0 10px;
-    }
-
-    .col-sm-3, .col-sm-4 {
-        width: 100%;
-    }
-    
-    .img-circle {
-        width: 120px;
-        height: 120px;
+        display: block;
+        text-align: center;
     }
 }
