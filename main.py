@@ -65,7 +65,10 @@ def Register():
     
     s = URLSafeTimedSerializer(app.secret_key)
     token = s.dumps(user_data, salt='email-confirm')
-    confirm_url = url_for('confirm_registration', token=token, _external=True)
+
+    base_url = request.host_url.rstrip('/') 
+    confirm_path = url_for('confirm_registration', token=token)
+    confirm_url = f"{base_url}{confirm_path}"
 
     html_body = f"""
     <!DOCTYPE html>
