@@ -26,4 +26,5 @@ Aplikacija bo dostopna na naslovu:
 
 ```
 http://127.0.0.1:5000
+https://zakljucna-svuk.onrender.com
 ```
